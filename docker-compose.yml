@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - ALLOWED_ORIGINS=*
+    # Mount the current directory so the app sees its own source code as the repo
+    volumes:
+      - .:/app/repo
+    # Optional: Mount src for hot reloading in dev (would need different CMD or setup)
+    # volumes:
+    #   - ./src:/app/src
+
+volumes:
+  playground_data:
