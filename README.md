@@ -7,18 +7,18 @@
 
 ```mermaid
 graph TD
-    subgraph Frontend [Frontend (React)]
+    subgraph Frontend ["Frontend (React)"]
         UI[User Interface]
         Graph[Graph Visualizer]
     end
 
-    subgraph Backend [Backend (FastAPI)]
+    subgraph Backend ["Backend (FastAPI)"]
         API[API Layer]
         DAG[DAG Builder]
         Parser[Object Parser]
     end
 
-    subgraph Storage [Git Repository]
+    subgraph Storage ["Git Repository"]
         GitDir[.git Directory]
         Objects[Objects (zlib)]
         Refs[References]
