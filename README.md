@@ -63,7 +63,7 @@ The easiest way to run the application is with **Docker**, which sets up both th
 
 2.  **Run with Docker Compose**:
     ```bash
-    docker-compose up --build
+    docker compose up --build
     ```
 
 3.  **Explore**:
