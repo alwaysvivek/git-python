@@ -92,3 +92,35 @@ def get_blob(oid: str):
 def health_check():
     return {"status": "ok", "repo": str(service.git_dir)}
 
+# --- Static File Serving (SPA Support) ---
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+# Get the project root directory (assumes running from project root or src/api)
+# In Docker, WORKDIR is /app, so src/ui/dist is at /app/src/ui/dist
+BASE_DIR = Path(os.getcwd())
+STATIC_DIR = BASE_DIR / "src" / "ui" / "dist"
+
+# Mount the assets folder (JS/CSS)
+if (STATIC_DIR / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=str(STATIC_DIR / "assets")), name="assets")
+
+# Catch-all route to serve index.html for client-side routing
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str):
+    # API calls should have been handled above. If we get here with /api, it's a 404.
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="API endpoint not found")
+
+    # Serve specific static files if they exist (e.g. favicon.ico, vite.svg)
+    file_path = STATIC_DIR / full_path
+    if file_path.exists() and file_path.is_file():
+        return FileResponse(file_path)
+
+    # Fallback to index.html for React routing
+    index_html = STATIC_DIR / "index.html"
+    if index_html.exists():
+        return FileResponse(index_html)
+    
+    return {"detail": "Frontend not found. Did you run 'npm run build'?"}
+
