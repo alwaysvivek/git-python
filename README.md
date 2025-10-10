@@ -2,7 +2,7 @@
 
 **tinygit** is a lightweight tool to visualize and explore the internals of a Git repository. It bypasses the standard `git` CLI to interact directly with the `.git` directory, parsing binary objects (commits, trees, blobs) and constructing a Directed Acyclic Graph (DAG) for visualization.
 
-![Git Graph Explorer Demo](docs/demo-screenshot.png)
+![Git Graph Explorer Demo](https://github.com/alwaysvivek/tiny-git/blob/main/docs/demo-screenshot.png)
 
 ```mermaid
 graph TD
